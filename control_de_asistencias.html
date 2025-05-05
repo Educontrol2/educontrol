@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduControl - Control de Asistencias</title>
+    <style>
+        :root {
+            --color-verde-oscuro: #1a5d1a;
+            --color-verde-medio: #2d8a2d;
+            --color-amarillo: #daa520;
+            --color-gris-oscuro: #333333;
+            --color-gris-medio: #555555;
+            --color-gris-claro: #777777;
+            --color-blanco: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--color-gris-oscuro);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--color-verde-oscuro) 0%, var(--color-verde-medio) 100%);
+            color: var(--color-blanco);
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            background-color: var(--color-blanco);
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .page-title h1 {
+            font-size: 2.5rem;
+            color: var(--color-verde-oscuro);
+        }
+
+        .module-content {
+            background-color: var(--color-blanco);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .module-content h2 {
+            color: var(--color-verde-oscuro);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .course-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .course-card {
+            background-color: var(--color-verde-medio);
+            color: var(--color-blanco);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>EduControl - Control de Asistencias</h1>
+        </div>
+    </header>
+
+    <section class="page-title">
+        <div class="container">
+            <h1>Selecciona un Curso</h1>
+        </div>
+    </section>
+
+    <main class="container">
+        <!-- Primero -->
+        <div class="module-content">
+            <h2>Primero</h2>
+            <div class="course-list">
+                <a href="curso_1A.html" class="course-card">1° A</a>
+                <a href="curso_1B.html" class="course-card">1° B</a>
+            </div>
+        </div>
+
+        <!-- Segundo -->
+        <div class="module-content">
+            <h2>Segundo</h2>
+            <div class="course-list">
+                <a href="curso_2A.html" class="course-card">2° A</a>
+                <a href="curso_2B.html" class="course-card">2° B</a>
+            </div>
+        </div>
+
+        <!-- Tercero -->
+        <div class="module-content">
+            <h2>Tercero</h2>
+            <div class="course-list">
+                <a href="curso_3A.html" class="course-card">3° A</a>
+                <a href="curso_3B.html" class="course-card">3° B</a>
+            </div>
+        </div>
+
+        <!-- Cuarto -->
+        <div class="module-content">
+            <h2>Cuarto</h2>
+            <div class="course-list">
+                <a href="curso_4A.html" class="course-card">4° A</a>
+                <a href="curso_4B.html" class="course-card">4° B</a>
+            </div>
+        </div>
+
+        <!-- Quinto -->
+        <div class="module-content">
+            <h2>Quinto</h2>
+            <div class="course-list">
+                <a href="curso_5A.html" class="course-card">5° A</a>
+                <a href="curso_5B.html" class="course-card">5° B</a>
+            </div>
+        </div>
+
+        <!-- Sexto -->
+        <div class="module-content">
+            <h2>Sexto</h2>
+            <div class="course-list">
+                <a href="curso_6A.html" class="course-card">6° A</a>
+                <a href="curso_6B.html" class="course-card">6° B</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
