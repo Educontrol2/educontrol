@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduControl - Gestión de Notas</title>
+    <style>
+        :root {
+            --color-verde-oscuro: #1a5d1a;
+            --color-verde-medio: #2d8a2d;
+            --color-amarillo: #daa520;
+            --color-gris-oscuro: #333333;
+            --color-gris-medio: #555555;
+            --color-gris-claro: #777777;
+            --color-blanco: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--color-gris-oscuro);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--color-verde-oscuro) 0%, var(--color-verde-medio) 100%);
+            color: var(--color-blanco);
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--color-blanco);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--color-amarillo);
+            margin-left: 5px;
+        }
+        
+        .logo svg {
+            margin-right: 10px;
+            fill: var(--color-amarillo);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin-left: 2rem;
+        }
+        
+        .nav-menu a {
+            color: var(--color-blanco);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--color-amarillo);
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--color-amarillo);
+            transition: width 0.3s;
+        }
+        
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-menu a.active {
+            color: var(--color-amarillo);
+        }
+        
+        .nav-menu a.active::after {
+            width: 100%;
+            background-color: var(--color-amarillo);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-blanco);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .page-title {
+            background-color: var(--color-blanco);
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .page-title h1 {
+            font-size: 2.5rem;
+            color: var(--color-verde-oscuro);
+            margin-bottom: 0.5rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .breadcrumb li {
+            list-style: none;
+            font-size: 0.9rem;
+            color: var(--color-gris-medio);
+        }
+        
+        .breadcrumb li a {
+            color: var(--color-verde-medio);
+            text-decoration: none;
+        }
+        
+        .breadcrumb li a:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: '/';
+            margin: 0 0.5rem;
+        }
+        
+        .module-content {
+            background-color: var(--color-blanco);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .module-content h2 {
+            color: var(--color-verde-oscuro);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid rgba(26, 93, 26, 0.1);
+            padding-bottom: 0.8rem;
+        }
+        
+        .module-tools {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .search-form {
+            display: flex;
+            max-width: 500px;
+            flex-grow: 1;
+        }
+        
+        .search-form input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px 0 0 5px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .search-form input:focus {
+            border-color: var(--color-verde-medio);
+            box-shadow: 0 0 0 2px rgba(45, 138, 45, 0.2);
+        }
+        
+        .search-form button {
+            background-color: var(--color-verde-medio);
+            color: var(--color-blanco);
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .search-form button:hover {
+            background-color: var(--color-verde-oscuro);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .btn svg {
+            margin-right: 0.5rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--color-verde-medio);
+            color: var(--color-blanco);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--color-verde-oscuro);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-secondary {
+            background-color: var(--color-amarillo);
+            color: var(--color-gris-oscuro);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #c69500;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        table th {
+            background-color: var(--color-verde-oscuro);
+            color: var(--color-blanco);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        table tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        table tr:hover {
+            background-color: rgba(42, 139, 42, 0.05);
+        }
+        
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-action {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .btn-view {
+            background-color: rgba(42, 139, 42, 0.1);
+            color: var(--color-verde-medio);
+        }
+        
+        .btn-view:hover {
+            background-color: var(--color-verde-medio);
+            color: var(--color-blanco);
+        }
+        
+        .btn-edit {
+            background-color: rgba(218, 165, 32, 0.1);
+            color: var(--color-amarillo);
+        }
+        
+        .btn-edit:hover {
+            background-color: var(--color-amarillo);
+            color: var(--color-blanco);
+        }
+        
+        .btn-delete {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+        
+        .btn-delete:hover {
+            background-color: #dc3545;
+            color: var(--color-blanco);
+        }
+        
+        .status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .status-aprobado {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+        
+        .status-proceso {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+        
+        .status-reprobado {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .pagination a {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0 0.2rem;
+            border: 1px solid #e0e0e0;
+            text-decoration: none;
+            color: var(--color-gris-oscuro);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .pagination a:hover {
+            background-color: var(--color-verde-medio);
+            color: var(--color-blanco);
+            border-color: var(--color-verde-medio);
+        }
+        
+        .pagination a.active {
+            background-color: var(--color-verde-medio);
+            color: var(--color-blanco);
+            border-color: var(--color-verde-medio);
+        }
+        
+        .footer {
+            background-color: var(--color-gris-oscuro);
+            color: var(--color-blanco);
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-section h3 {
+            color: var(--color-amarillo);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section p {
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--color-amarillo);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 992px) {
+            .module-tools {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-form {
+                max-width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .action-buttons {
+                justify-content: space-between;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background-color: var(--color-verde-oscuro);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                padding: 2rem 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-menu li {
+                margin: 1.5rem 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                    Edu<span>Control</span>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="gestion-notas.html" class="active">Gestión de Notas</a></li>
+                    <li><a href="control-asistencias.html">Control de Asistencias</a></li>
+                    <li><a href="horarios-alumnos.html">Horarios</a></li>
+                    <li><a href="gestion-alumnos.html">Alumnos</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-title">
+        <div class="container">
+            <h1>Gestión de Notas</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Inicio</a></li>
+                <li>Gestión de Notas</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="module-content">
+            <h2>Calificaciones de Estudiantes</h2>
+            
+            <div class="module-tools">
+                <form class="search-form">
+                    <input type="text" placeholder="Buscar estudiante...">
+                    <button type="submit">
+                        <svg width="16" height="16" viewBox="0 0 24 24">
+                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                        </svg>
+                    </button>
+                </form>
+                
+                <div class="action-buttons">
+                    <a href="#" class="btn btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                        </svg>
+                        Registrar Notas
+                    </a>
+                    <a href="#" class="btn btn-secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path>
+                        </svg>
+                        Exportar Informe
+                    </a>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Estudiante</th>
+                            <th>Curso</th>
+                            <th>Materia</th>
+                            <th>Nota 1</th>
+                            <th>Nota 2</th>
+                            <th>Nota Final</th>
+                            <th>Promedio</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>001</td>
+                            <td>Juan Pérez</td>
+                            <td>3° A</td>
+                            <td>Matemáticas</td>
+                            <td>8.5</td>
+                            <td>7.8</td>
+                            <td>9.0</td>
+                            <td>8.4</td>
+                            <td><span class="status status-aprobado">Aprobado</span></td>
+                            <td>
+                                <div class="actions">
+                                    <a href="#" class="btn-action btn-view" title="Ver detalles">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="btn-action btn-edit" title="Editar">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="btn-action btn-delete" title="Eliminar">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>002</td>
+                            <td>María González</td>
+                            <td>3° A</td>
+                            <td>Matemáticas</td>
+                            <td>9.2</td>
+                            <td>8.8</td>
+                            <td>9.5</td>
+                            <td>9.2</td>
+                            <td><span class="status status-aprobado">Aprobado</span></td>
+                            <td>
+                                <div class="actions">
+                                    <a href="#" class="btn-action btn-view" title="Ver detalles">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="btn-action btn-edit" title="Editar">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="btn-action btn-delete" title="Eliminar">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>003</td>
+                            <td>Carlos Rodríguez</td>
+                            <td>3° A</td>
+                            <td>Matemáticas</td>
+                            <td>6.5</td>
+                            <td>5.8</td>
+                            <td>6.2</td>
+                            <td>6.2</td>
+                            <td><span class="status status-proceso">En proceso</span></td>
+                            <td>
+                                <div class="actions">
+                                    <a href="#" class="btn-action btn-view" title="Ver detalles">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="btn-action btn-edit" title="Editar">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="btn-action btn-delete" title="Eliminar">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>004</td>
+                            <td>Ana Martínez</td>
+                            <td>3° A</td>
+                            <td>Matemáticas</td>
+                            <td>4.5</td>
+                            <td>5.2</td>
+                            <td>5.0</td>
+                            <td>4.9</td>
+                            <td><span class="status status-reprobado">Reprobado</span></td>
+                            <td>
+                                <div class="actions">
+                                    <a href="#" class="btn-action btn-view" title="Ver detalles">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="btn-action btn-edit" title="Editar">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="btn-action btn-delete" title="Eliminar">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>005</td>
+                            <td>Luis Sánchez</td>
+                            <td>3° A</td>
+                            <td>Matemáticas</td>
+                            <td>7.8</td>
+                            <td>8.0</td>
+                            <td>7.5</td>
+                            <td>7.8</td>
+                            <td><span class="status status-aprobado">Aprobado</span></td>
+                            <td>
+                                <div class="actions">
+                                    <a href="#" class="btn-action btn-view" title="Ver detalles">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="btn-action btn-edit" title="Editar">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="btn-action btn-delete" title="Eliminar">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>006</td>
+                            <td>Laura Torres</td>
+                            <td>3° A</td>
+                            <td>Matemáticas</td>
+                            <td>7.2</td>
+                            <td>6.5</td>
+                            <td>7.0</td>
+                            <td>6.9</td>
+                            <td><span class="status status-proceso">En proceso</span></td>
+                            <td>
+                                <div class="actions">
+                                    <a href="#" class="btn-action btn-view" title="Ver detalles">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="btn-action btn-edit" title="Editar">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="btn-action btn-delete" title="Eliminar">
+                                        <svg width="16" height="16" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="pagination">
+                <a href="#">&laquo;</a>
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">&raquo;</a>
+            </div>
+        </div>
+        
+        <div class="module-content">
+            <h2>Estadísticas de Rendimiento</h2>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 30px;">
+                <div style="flex: 1; min-width: 250px; background-color: rgba(26, 93, 26, 0.1); padding: 20px; border-radius: 10px; text-align: center;">
+                    <h3 style="color: var(--color-verde-oscuro); margin-bottom: 10px;">Promedio General</h3>
+                    <div style="font-size: 2.5rem; font-weight: 700; color: var(--color-verde-medio);">7.8</div>
+                    <p style="color: var(--color-gris-medio); margin-top: 10px;">Curso: 3° A - Matemáticas</p>
+                </div>
+                
+                <div style="flex: 1; min-width: 250px; background-color: rgba(218, 165, 32, 0.1); padding: 20px; border-radius: 10px; text-align: center;">
+                    <h3 style="color: var(--color-gris-oscuro); margin-bottom: 10px;">Estudiantes Aprobados</h3>
+                    <div style="font-size: 2.5rem; font-weight: 700; color: var(--color-amarillo);">65%</div>
+                    <p style="color: var(--color-gris-medio); margin-top: 10px;">18 de 28 estudiantes</p>
+                </div>
+                
+                <div style="flex: 1; min-width: 250px; background-color: rgba(220, 53, 69, 0.1); padding: 20px; border-radius: 10px; text-align: center;">
+                    <h3 style="color: var(--color-gris-oscuro); margin-bottom: 10px;">Estudiantes en Riesgo</h3>
+                    <div style="font-size: 2.5rem; font-weight: 700; color: #dc3545;">35%</div>
+                    <p style="color: var(--color-gris-medio); margin-top: 10px;">10 de 28 estudiantes</p>
+                </div>
+            </div>
+            
+            <div style="background-color: #f9f9f9; border-radius: 10px; padding: 20px; border: 1px solid #e0e0e0;">
+                <h3 style="color: var(--color-verde-oscuro); margin-bottom: 15px;">Distribución de Calificaciones</h3>
+                <div style="display: flex; height: 200px; align-items: flex-end; gap: 15px; margin: 20px 0;">
+                    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <div style="width: 100%; background-color: rgba(26, 93, 26, 0.7); height: 15%; border-radius: 5px 5px 0 0;"></div>
+                        <span style="font-size: 0.9rem; color: var(--color-gris-medio);">0-2</span>
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <div style="width: 100%; background-color: rgba(26, 93, 26, 0.7); height: 25%; border-radius: 5px 5px 0 0;"></div>
+                        <span style="font-size: 0.9rem; color: var(--color-gris-medio);">2-4</span>
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <div style="width: 100%; background-color: rgba(26, 93, 26, 0.7); height: 40%; border-radius: 5px 5px 0 0;"></div>
+                        <span style="font-size: 0.9rem; color: var(--color-gris-medio);">4-6</span>
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <div style="width: 100%; background-color: rgba(26, 93, 26, 0.7); height: 75%; border-radius: 5px 5px 0 0;"></div>
+                        <span style="font-size: 0.9rem; color: var(--color-gris-medio);">6-8</span>
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <div style="width: 100%; background-color: rgba(26, 93, 26, 0.7); height: 60%; border-radius: 5px 5px 0 0;"></div>
+                        <span style="font-size: 0.9rem; color: var(--color-gris-medio);">8-10</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="module-content">
+            <h2>Últimas Actualizaciones</h2>
+            
+            <div style="border-left: 3px solid var(--color-verde-medio); padding-left: 20px; margin-bottom: 20px;">
+                <h3 style="font-size: 1.2rem; color: var(--color-verde-oscuro); margin-bottom: 5px;">Calificaciones Finales Registradas</h3>
+                <p style="color: var(--color-gris-medio); font-size: 0.9rem; margin-bottom: 10px;">15 de abril, 2025 - 14:30</p>
+                <p>Se han registrado las calificaciones finales para el curso 3° A en la materia de Matemáticas. Los estudiantes ya pueden consultar sus resultados.</p>
+            </div>
+            
+            <div style="border-left: 3px solid var(--color-amarillo); padding-left: 20px; margin-bottom: 20px;">
+                <h3 style="font-size: 1.2rem; color: var(--color-gris-oscuro); margin-bottom: 5px;">Recordatorio: Exámenes de Recuperación</h3>
+                <p style="color: var(--color-gris-medio); font-size: 0.9rem; margin-bottom: 10px;">12 de abril, 2025 - 09:15</p>
+                <p>Los exámenes de recuperación para los estudiantes con calificaciones por debajo del mínimo aprobatorio se realizarán el próximo viernes 18 de abril.</p>
+            </div>
+            
+            <div style="border-left: 3px solid var(--color-verde-medio); padding-left: 20px;">
+                <h3 style="font-size: 1.2rem; color: var(--color-verde-oscuro); margin-bottom: 5px;">Actualización del Sistema</h3>
+                <p style="color: var(--color-gris-medio); font-size: 0.9rem; margin-bottom: 10px;">10 de abril, 2025 - 11:45</p>
+                <p>Se ha implementado una nueva funcionalidad para exportar informes de calificaciones en formato Excel y PDF. Los profesores ya pueden utilizar esta característica.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Sobre EduControl</h3>
+                    <p>Sistema integral de gestión educativa diseñado para facilitar el seguimiento académico y administrativo de instituciones educativas.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="gestion-notas.html">Gestión de Notas</a></li>
+                        <li><a href="control-asistencias.html">Control de Asistencias</a></li>
+                        <li><a href="horarios-alumnos.html">Horarios</a></li>
+                        <li><a href="gestion-alumnos.html">Alumnos</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul class="footer-links">
+                        <li>Email: info@educontrol.com</li>
+                        <li>Teléfono: (123) 456-7890</li>
+                        <li>Dirección: Av. Educación 123, Ciudad</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 EduControl. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

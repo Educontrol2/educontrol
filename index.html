@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduControl - Sistema de Gestión Educativa</title>
+    <style>
+        :root {
+            --color-verde-oscuro: #1a5d1a;
+            --color-verde-medio: #2d8a2d;
+            --color-amarillo: #daa520;
+            --color-gris-oscuro: #333333;
+            --color-gris-medio: #555555;
+            --color-gris-claro: #777777;
+            --color-blanco: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--color-gris-oscuro);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--color-verde-oscuro) 0%, var(--color-verde-medio) 100%);
+            color: var(--color-blanco);
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--color-blanco);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--color-amarillo);
+            margin-left: 5px;
+        }
+        
+        .logo svg {
+            margin-right: 10px;
+            fill: var(--color-amarillo);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin-left: 2rem;
+        }
+        
+        .nav-menu a {
+            color: var(--color-blanco);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--color-amarillo);
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--color-amarillo);
+            transition: width 0.3s;
+        }
+        
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-blanco);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1200/600') center/cover no-repeat;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hero-image-container {
+            margin: 2rem auto;
+            max-width: 800px;
+            position: relative;
+        }
+        
+        .hero-image-effect {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transform: perspective(1000px) rotateX(5deg);
+            transition: all 0.5s ease;
+        }
+        
+        .hero-image-effect:hover {
+            transform: perspective(1000px) rotateX(0);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .hero-image-effect:hover .hero-image {
+            transform: scale(1.05);
+        }
+        
+        .hero-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(26, 93, 26, 0.7) 0%, rgba(218, 165, 32, 0.7) 100%);
+            opacity: 0.6;
+            transition: opacity 0.5s ease;
+        }
+        
+        .hero-image-effect:hover .hero-image-overlay {
+            opacity: 0.2;
+        }
+        
+        .dashboard-menu {
+            background-color: #f8f9fa;
+        }
+        
+        .menu-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .menu-card {
+            background-color: var(--color-blanco);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--color-gris-oscuro);
+            border-left: 4px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .menu-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--color-verde-medio);
+        }
+        
+        .menu-card-icon {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(42, 139, 42, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-card:hover .menu-card-icon {
+            background-color: var(--color-verde-medio);
+        }
+        
+        .menu-card-icon svg {
+            width: 35px;
+            height: 35px;
+            fill: var(--color-verde-medio);
+            transition: all 0.3s ease;
+        }
+        
+        .menu-card:hover .menu-card-icon svg {
+            fill: var(--color-blanco);
+        }
+        
+        .menu-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-verde-oscuro);
+        }
+        
+        .menu-card p {
+            color: var(--color-gris-medio);
+            margin-bottom: 0;
+        }
+        
+        .hero-content {
+            color: var(--color-blanco);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero h1 span {
+            color: var(--color-amarillo);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary {
+            background-color: var(--color-amarillo);
+            color: var(--color-gris-oscuro);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:hover {
+            background-color: #c69500;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-blanco);
+            border: 2px solid var(--color-blanco);
+            margin-left: 1rem;
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--color-blanco);
+            color: var(--color-verde-oscuro);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--color-verde-oscuro);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 3px;
+            background-color: var(--color-amarillo);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .features {
+            background-color: var(--color-blanco);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: var(--color-blanco);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid var(--color-amarillo);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(42, 139, 42, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .feature-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--color-verde-medio);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-verde-oscuro);
+        }
+        
+        .about {
+            background-color: #f8f9fa;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-verde-oscuro);
+        }
+        
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-amarillo);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--color-gris-medio);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .testimonials {
+            background-color: var(--color-verde-oscuro);
+            color: var(--color-blanco);
+        }
+        
+        .testimonials .section-title h2 {
+            color: var(--color-blanco);
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .testimonial-text {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .testimonial-text::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -10px;
+            font-size: 4rem;
+            color: var(--color-amarillo);
+            opacity: 0.5;
+            line-height: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--color-gris-claro);
+            margin-right: 1rem;
+            overflow: hidden;
+        }
+        
+        .testimonial-author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .testimonial-author-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .testimonial-author-info p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .contact {
+            background-color: var(--color-blanco);
+        }
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-verde-oscuro);
+        }
+        
+        .contact-details {
+            margin-bottom: 2rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            margin-right: 1rem;
+            color: var(--color-verde-medio);
+            font-size: 1.5rem;
+        }
+        
+        .contact-text h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: var(--color-gris-oscuro);
+        }
+        
+        .contact-text p {
+            color: var(--color-gris-medio);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--color-verde-medio);
+            color: var(--color-blanco);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--color-amarillo);
+            transform: translateY(-3px);
+        }
+        
+        .contact-form form {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            position: relative;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-verde-medio);
+            box-shadow: 0 0 0 2px rgba(42, 139, 42, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-group label {
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            font-size: 1rem;
+            color: var(--color-gris-medio);
+            transition: all 0.3s;
+            pointer-events: none;
+        }
+        
+        .form-group input:focus ~ label,
+        .form-group textarea:focus ~ label,
+        .form-group input:not(:placeholder-shown) ~ label,
+        .form-group textarea:not(:placeholder-shown) ~ label {
+            top: -10px;
+            left: 10px;
+            font-size: 0.8rem;
+            padding: 0 5px;
+            background-color: var(--color-blanco);
+            color: var(--color-verde-medio);
+        }
+        
+        .btn-submit {
+            background-color: var(--color-verde-medio);
+            color: var(--color-blanco);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit:hover {
+            background-color: var(--color-verde-oscuro);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        footer {
+            background-color: var(--color-gris-oscuro);
+            color: var(--color-blanco);
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-amarillo);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--color-amarillo);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-col p {
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .footer-links a:hover {
+            color: var(--color-amarillo);
+            transform: translateX(5px);
+        }
+        
+        .footer-subscribe form {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-subscribe input {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            font-size: 0.9rem;
+        }
+        
+        .footer-subscribe button {
+            background-color: var(--color-amarillo);
+            color: var(--color-gris-oscuro);
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .footer-subscribe button:hover {
+            background-color: #c69500;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 992px) {
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                order: -1;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background-color: var(--color-verde-oscuro);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                padding: 2rem 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-menu li {
+                margin: 1.5rem 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                height: 500px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                    Edu<span>Control</span>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="#features">Funcionalidades</a></li>
+                    <li><a href="#about">Nosotros</a></li>
+                    <li><a href="#testimonials">Testimonios</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Sistema Integral de Gestión <span>Educativa</span></h1>
+                <div class="hero-image-container">
+                    <div class="hero-image-effect">
+                        <img src="/api/placeholder/800/500" alt="Sistema de Gestión Educativa" class="hero-image">
+                        <div class="hero-image-overlay"></div>
+                    </div>
+                </div>
+                <p>Optimiza la gestión académica y administrativa de tu institución educativa con nuestra plataforma líder en el mercado. Una solución completa para escuelas, colegios y universidades.</p>
+                <div class="hero-btns">
+                    <a href="login.html" class="btn btn-primary">Iniciar Sesión</a>
+                    <a href="#features" class="btn btn-secondary">Conocer Más</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="dashboard-menu" class="section dashboard-menu">
+        <div class="container">
+            <div class="section-title">
+                <h2>Acceso a Módulos</h2>
+            </div>
+            <div class="menu-cards">
+                <a href="gestion-notas.html" class="menu-card">
+                    <div class="menu-card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"></path>
+                        </svg>
+                    </div>
+                    <h3>Gestión de Notas</h3>
+                    <p>Administra y consulta las calificaciones de los estudiantes de manera sencilla y rápida.</p>
+                </a>
+                <a href="control-asistencias.html" class="menu-card">
+                    <div class="menu-card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3>Control de Asistencias</h3>
+                    <p>Registra la asistencia de los alumnos y obtén reportes detallados.</p>
+                </a>
+                <a href="horarios-alumnos.html" class="menu-card">
+                    <div class="menu-card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"></path>
+                        </svg>
+                    </div>
+                    <h3>Horarios de Alumnos</h3>
+                    <p>Consulta y administra los horarios de los alumnos de manera eficiente.</p>
+                </a>
+                <a href="gestion-alumnos.html" class="menu-card">
+                    <div class="menu-card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"></path>
+                        </svg>
+                    </div>
+                    <h3>Agregar/quitar alumnos</h3>
+                    <p>Agregá y da de baja a los alumnos de manera eficiente.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="section features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestras Funcionalidades</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+                        </svg>
+                    </div>
+                    <h3>Gestión de Estudiantes</h3>
+                    <p>Control completo de la información de estudiantes, desde expedientes académicos hasta datos personales y seguimiento de pagos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"></path>
+                        </svg>
+                    </div>
+                    <h3>Control Académico</h3>
+                    <p>Administra planes de estudio, calificaciones, asistencias y genera reportes detallados de rendimiento académico.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"></path>
+                        </svg>
+                    </div>
+                    <h3>Planificación Escolar</h3>
+                    <p>Organiza el calendario académico, horarios, eventos y actividades escolares desde una sola plataforma.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path>
+                        </svg>
+                    </div>
+                    <h3>Gestión Financiera</h3>
+                    <p>Control eficiente de pagos, facturas, presupuestos y reportes financieros para una administración transparente.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"></path>
+                        </svg>
+                    </div>
+                    <h3>Comunicación Integrada</h3>
+                    <p>Facilita la comunicación entre estudiantes, padres y docentes a través de mensajería interna, notificaciones y anuncios.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3>Seguridad Avanzada</h3>
+                    <p>Protección de datos garantizada, control de accesos por roles y gestión de permisos personalizada.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Solución Educativa de Vanguardia</h2>
+                    <p>En EduControl, nos dedicamos a transformar la gestión educativa mediante tecnología innovadora adaptada a las necesidades específicas de cada institución. Nuestra plataforma está diseñada para simplificar procesos administrativos y académicos, permitiendo a las instituciones enfocarse en lo más importante: la educación.</p>
+                    <p>Con más de 10 años de experiencia en el sector educativo, hemos desarrollado un sistema integral que responde a los desafíos actuales de las instituciones educativas, desde la administración diaria hasta la planificación estratégica a largo plazo.</p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Instituciones</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50,000+</div>
+                            <div class="stat-label">Estudiantes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Satisfacción</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="/api/placeholder/600/400" alt="Equipo EduControl" class="about-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="section testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Lo que dicen nuestros clientes</h2>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"></path>
+                        </svg>
+                    </div>
+                    <p class="testimonial-text">EduControl ha transformado la manera en que gestionamos nuestra escuela. La eficiencia administrativa ha mejorado notablemente y los padres están encantados con la transparencia que ofrece el sistema.</p>
+                    <div class="testimonial-author">
+                        <h4>María González</h4>
+                        <span>Directora, Colegio San Pedro</span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"></path>
+                        </svg>
+                    </div>
+                    <p class="testimonial-text">La facilidad de uso y la atención al cliente son excepcionales. Hemos podido implementar el sistema en tiempo récord y nuestro personal se adaptó rápidamente.</p>
+                    <div class="testimonial-author">
+                        <h4>Carlos Rodríguez</h4>
+                        <span>Administrador, Instituto Tecnológico Avanzado</span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"></path>
+                        </svg>
+                    </div>
+                    <p class="testimonial-text">Como docente, puedo asegurar que EduControl me ha permitido dedicar más tiempo a la enseñanza y menos a tareas administrativas. La gestión de calificaciones y asistencias es ahora mucho más sencilla.</p>
+                    <div class="testimonial-author">
+                        <h4>Laura Martínez</h4>
+                        <span>Profesora, Universidad Nacional</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="section pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Planes y Precios</h2>
+                <p>Soluciones adaptadas a las necesidades de cada institución educativa</p>
+            </div>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Plan Básico</h3>
+                        <div class="pricing-price">$199<span>/mes</span></div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li>Hasta 200 estudiantes</li>
+                            <li>Gestión académica básica</li>
+                            <li>Control de asistencias</li>
+                            <li>Reportes mensuales</li>
+                            <li>Soporte por email</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="#contact" class="btn btn-outline">Solicitar Demo</a>
+                    </div>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Más Popular</div>
+                    <div class="pricing-header">
+                        <h3>Plan Profesional</h3>
+                        <div class="pricing-price">$399<span>/mes</span></div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li>Hasta 500 estudiantes</li>
+                            <li>Gestión académica completa</li>
+                            <li>Control financiero</li>
+                            <li>Portal para padres</li>
+                            <li>Reportes personalizados</li>
+                            <li>Soporte prioritario</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="#contact" class="btn btn-primary">Solicitar Demo</a>
+                    </div>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Plan Enterprise</h3>
+                        <div class="pricing-price">Consultar</div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li>Estudiantes ilimitados</li>
+                            <li>Funciones personalizadas</li>
+                            <li>API de integración</li>
+                            <li>Migración de datos</li>
+                            <li>Capacitación presencial</li>
+                            <li>Soporte 24/7</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="#contact" class="btn btn-outline">Contactar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contáctanos</h2>
+                <p>Estamos listos para ayudarte a implementar la mejor solución para tu institución</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-form-container">
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Nombre</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="institution">Institución</label>
+                            <input type="text" id="institution" name="institution" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-info-item">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path>
+                        </svg>
+                        <div>
+                            <h4>Dirección</h4>
+                            <p>Av. Principal 1234, Ciudad Central</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path>
+                        </svg>
+                        <div>
+                            <h4>Teléfono</h4>
+                            <p>+1 (123) 456-7890</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path>
+                        </svg>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@educontrol.com</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M21.634 4.031c-.815.385-1.69.653-2.61.773 .94-.563 1.663-1.453 2.004-2.513-.88.523-1.854.9-2.89 1.103-.83-.883-2.01-1.435-3.316-1.435-2.51 0-4.544 2.034-4.544 4.544 0 .356.04.703.117 1.036-3.776-.19-7.125-1.998-9.367-4.744-.39.671-.615 1.452-.615 2.285 0 1.577.803 2.967 2.021 3.782-.745-.025-1.445-.228-2.057-.568l-.001.057c0 2.202 1.566 4.038 3.646 4.456-.38.104-.782.16-1.197.16-.293 0-.577-.028-.851-.081.579 1.804 2.257 3.118 4.245 3.155-1.554 1.218-3.512 1.945-5.638 1.945-.367 0-.728-.022-1.084-.065 2.01 1.289 4.399 2.041 6.966 2.041 8.358 0 12.928-6.924 12.928-12.929l-.012-.588c.887-.64 1.658-1.439 2.267-2.347z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M7.8 2h8.4c3.2 0 5.8 2.6 5.8 5.8v8.4c0 3.2-2.6 5.8-5.8 5.8h-8.4c-3.2 0-5.8-2.6-5.8-5.8v-8.4c0-3.2 2.6-5.8 5.8-5.8zm4.2 15.75c2.9 0 5.25-2.35 5.25-5.25s-2.35-5.25-5.25-5.25-5.25 2.35-5.25 5.25 2.35 5.25 5.25 5.25zm0-8.75c1.93 0 3.5 1.57 3.5 3.5s-1.57 3.5-3.5 3.5-3.5-1.57-3.5-3.5 1.57-3.5 3.5-3.5zm5.25-3.5c.7 0 1.26.56 1.26 1.26s-.56 1.26-1.26 1.26-1.26-.56-1.26-1.26.56-1.26 1.26-1.26z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M19.995 6.68c-.127 2.825-1.695 8.248-6.038 12.593-4.349 4.351-9.775 5.918-12.593 6.038 2.825-.127 8.25-1.695 12.595-6.038 4.344-4.345 5.909-9.773 6.036-12.593zm-6.52 10.256l-2.839-2.837-4.944 4.942.645.637 4.303-4.302 2.839 2.837 4.945-4.941-.645-.645-4.304 4.309z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="#">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                        </svg>
+                        Edu<span>Control</span>
+                    </a>
+                    <p>Tu solución integral para la gestión educativa</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-links-column">
+                        <h4>Empresa</h4>
+                        <ul>
+                            <li><a href="#about">Sobre Nosotros</a></li>
+                            <li><a href="#features">Funcionalidades</a></li>
+                            <li><a href="#testimonials">Testimonios</a></li>
+                            <li><a href="#contact">Contacto</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h4>Recursos</h4>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Soporte Técnico</a></li>
+                            <li><a href="#">Documentación</a></li>
+                            <li><a href="#">Tutoriales</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#">Términos de Servicio</a></li>
+                            <li><a href="#">Política de Privacidad</a></li>
+                            <li><a href="#">Seguridad</a></li>
+                            <li><a href="#">Cumplimiento GDPR</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EduControl. Todos los derechos reservados.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Términos</a>
+                    <a href="#">Privacidad</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Testimonial slider functionality
+        const dots = document.querySelectorAll('.dot');
+        const testimonialCards = document.querySelectorAll('.testimonial-card');
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                // Remove active class from all dots and cards
+                dots.forEach(d => d.classList.remove('active'));
+                testimonialCards.forEach(card => card.classList.remove('active'));
+                
+                // Add active class to current dot and card
+                dot.classList.add('active');
+                testimonialCards[index].classList.add('active');
+            });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
