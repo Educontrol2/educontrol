@@ -117,12 +117,13 @@
         }
         
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1200/600') center/cover no-repeat;
-            height: 600px;
-            display: flex;
-            align-items: center;
-            text-align: center;
+            background-image: url('1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white; /* para asegurar contraste si es necesario */
         }
+        
         
         .hero-image-container {
             margin: 2rem auto;
@@ -824,12 +825,6 @@
         <div class="container">
             <div class="hero-content">
                 <h1>Sistema Integral de Gestión <span>Educativa</span></h1>
-                <div class="hero-image-container">
-                    <div class="hero-image-effect">
-                        <img src="/api/placeholder/800/500" alt="Sistema de Gestión Educativa" class="hero-image">
-                        <div class="hero-image-overlay"></div>
-                    </div>
-                </div>
                 <p>Optimiza la gestión académica y administrativa de tu institución educativa con nuestra plataforma líder en el mercado. Una solución completa para escuelas, colegios y universidades.</p>
                 <div class="hero-btns">
                     <a href="login.html" class="btn btn-primary">Iniciar Sesión</a>
