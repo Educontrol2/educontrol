@@ -1,0 +1,207 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-top: 5rem;
+}
+
+.logo span {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.logo span:first-child {
+    color: #0a6c31;
+}
+
+.logo span:last-child {
+    color: #ffc107;
+}
+
+.login-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    border-color: #0a6c31;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(10, 108, 49, 0.1);
+}
+
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.remember-me input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.forgot-password a {
+    color: #0a6c31;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0a6c31;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 20px;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: #085526;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #666;
+    font-size: 14px;
+}
+
+.login-footer a {
+    color: #0a6c31;
+    text-decoration: none;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+.login-divider {
+    display: flex;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.login-divider span {
+    flex: 1;
+    height: 1px;
+    background-color: #ddd;
+}
+
+.login-divider p {
+    margin: 0 15px;
+    color: #999;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.btn-secondary {
+    background-color: white;
+    color: #0a6c31;
+    border: 1px solid #0a6c31;
+}
+
+.btn-secondary:hover {
+    background-color: #f0f8f4;
+}
+
+.social-login {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.social-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.social-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.social-btn img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.help-text {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+}

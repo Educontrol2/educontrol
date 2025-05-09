@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horarios - EduControl</title>
+    <link rel="stylesheet" href="horarios.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                    Edu<span>Control</span>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="../gestionNotas/gestion-notas.html" class="active">Gestión de Notas</a></li>
+                    <li><a href="../controlAsis/control_de_asistencias.html">Control de Asistencias</a></li>
+                    <li><a href="../horariosAlum.html/horarios-alumnos.html">Horarios</a></li>
+                    <li><a href="../gestionAlumnos/gestion-alumnos.html">Alumnos</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <h1 class="page-title">Horarios</h1>
+        <div class="breadcrumb">
+            <a href="index.html">Inicio</a> / Horarios
+        </div>
+
+        <div class="content">
+            <h2>Gestión de Horarios</h2>
+
+            <div class="schedule-filters">
+                <div class="filter-group">
+                    <label for="curso">Curso:</label>
+                    <select id="curso">
+                        <option value="">Seleccionar curso</option>
+                        <option value="3A" selected>3° A</option>
+                        <option value="3B">3° B</option>
+                        <option value="4A">4° A</option>
+                        <option value="4B">4° B</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="docente">Docente:</label>
+                    <select id="docente">
+                        <option value="">Todos los docentes</option>
+                        <option value="1">Sandra García</option>
+                        <option value="2">Miguel Rodríguez</option>
+                        <option value="3">Laura Fernández</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="ciclo">Ciclo lectivo:</label>
+                    <select id="ciclo">
+                        <option value="2025" selected>2025</option>
+                        <option value="2024">2024</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-row">
+                <div class="search-box">
+                    <input type="text" placeholder="Buscar por curso o docente...">
+                    <button>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 5px;">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                        Crear Horario
+                    </button>
+                    <button class="btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 5px;">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                        </svg>
+                        Exportar Horarios
+                    </button>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Hora</th>
+                        <th>Lunes</th>
+                        <th>Martes</th>
+                        <th>Miércoles</th>
+                        <th>Jueves</th>
+                        <th>Viernes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="time-slot">07:30 - 08:20</td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Matemáticas</span>
+                                <span class="teacher-name">Prof. Sandra García</span>
+                                <span class="room">Aula 103</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Historia</span>
+                                <span class="teacher-name">Prof. Miguel Rodríguez</span>
+                                <span class="room">Aula 105</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Ciencias Naturales</span>
+                                <span class="teacher-name">Prof. Laura Fernández</span>
+                                <span class="room">Lab. Ciencias</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Matemáticas</span>
+                                <span class="teacher-name">Prof. Sandra García</span>
+                                <span class="room">Aula 103</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Lengua</span>
+                                <span class="teacher-name">Prof. Ana Gómez</span>
+                                <span class="room">Aula 101</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="time-slot">08:20 - 09:10</td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Matemáticas</span>
+                                <span class="teacher-name">Prof. Sandra García</span>
+                                <span class="room">Aula 103</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Historia</span>
+                                <span class="teacher-name">Prof. Miguel Rodríguez</span>
+                                <span class="room">Aula 105</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Ciencias Naturales</span>
+                                <span class="teacher-name">Prof. Laura Fernández</span>
+                                <span class="room">Lab. Ciencias</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Matemáticas</span>
+                                <span class="teacher-name">Prof. Sandra García</span>
+                                <span class="room">Aula 103</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Lengua</span>
+                                <span class="teacher-name">Prof. Ana Gómez</span>
+                                <span class="room">Aula 101</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="time-slot">09:10 - 10:00</td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Lengua</span>
+                                <span class="teacher-name">Prof. Ana Gómez</span>
+                                <span class="room">Aula 101</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Música</span>
+                                <span class="teacher-name">Prof. Carlos López</span>
+                                <span class="room">Sala Música</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Geografía</span>
+                                <span class="teacher-name">Prof. Miguel Rodríguez</span>
+                                <span class="room">Aula 105</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Ed. Física</span>
+                                <span class="teacher-name">Prof. Javier Martínez</span>
+                                <span class="room">Gimnasio</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Inglés</span>
+                                <span class="teacher-name">Prof. María Pérez</span>
+                                <span class="room">Aula 104</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="time-slot">10:00 - 10:30</td>
+                        <td colspan="5" style="text-align: center; background-color: #f8f9fa;">
+                            <strong>RECREO</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="time-slot">10:30 - 11:20</td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Inglés</span>
+                                <span class="teacher-name">Prof. María Pérez</span>
+                                <span class="room">Aula 104</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Ciencias Naturales</span>
+                                <span class="teacher-name">Prof. Laura Fernández</span>
+                                <span class="room">Lab. Ciencias</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Informática</span>
+                                <span class="teacher-name">Prof. Pedro Sánchez</span>
+                                <span class="room">Sala Informática</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Ed. Física</span>
+                                <span class="teacher-name">Prof. Javier Martínez</span>
+                                <span class="room">Gimnasio</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Plástica</span>
+                                <span class="teacher-name">Prof. Lucía Torres</span>
+                                <span class="room">Taller Arte</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="time-slot">11:20 - 12:10</td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Inglés</span>
+                                <span class="teacher-name">Prof. María Pérez</span>
+                                <span class="room">Aula 104</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Ciencias Naturales</span>
+                                <span class="teacher-name">Prof. Laura Fernández</span>
+                                <span class="room">Lab. Ciencias</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Informática</span>
+                                <span class="teacher-name">Prof. Pedro Sánchez</span>
+                                <span class="room">Sala Informática</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Historia</span>
+                                <span class="teacher-name">Prof. Miguel Rodríguez</span>
+                                <span class="room">Aula 105</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Plástica</span>
+                                <span class="teacher-name">Prof. Lucía Torres</span>
+                                <span class="room">Taller Arte</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="time-slot">12:10 - 13:00</td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Geografía</span>
+                                <span class="teacher-name">Prof. Miguel Rodríguez</span>
+                                <span class="room">Aula 105</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Lengua</span>
+                                <span class="teacher-name">Prof. Ana Gómez</span>
+                                <span class="room">Aula 101</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Matemáticas</span>
+                                <span class="teacher-name">Prof. Sandra García</span>
+                                <span class="room">Aula 103</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Lengua</span>
+                                <span class="teacher-name">Prof. Ana Gómez</span>
+                                <span class="room">Aula 101</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="class-info">
+                                <span class="class-name">Tutoría</span>
+                                <span class="teacher-name">Prof. Ana Gómez</span>
+                                <span class="room">Aula 101</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script src="horarios-alumnos.js"></script>
+</body>
+</html>

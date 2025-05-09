@@ -1,0 +1,511 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: #0a6c31;
+    color: white;
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo span {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo span:first-child {
+    color: white;
+}
+
+.logo span:last-child {
+    color: #ffc107;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+}
+
+nav ul li a.active {
+    color: #ffc107;
+    border-bottom: 2px solid #ffc107;
+}
+
+.page-title {
+    text-align: center;
+    color: #0a6c31;
+    margin: 30px 0;
+    font-size: 32px;
+}
+
+.breadcrumb {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #666;
+}
+
+.breadcrumb a {
+    color: #0a6c31;
+    text-decoration: none;
+}
+
+.content {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 30px;
+}
+
+.tab {
+    padding: 12px 25px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    margin-right: 10px;
+}
+
+.tab.active {
+    color: #0a6c31;
+    border-bottom: 3px solid #0a6c31;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Estilos para formulario */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.btn-primary {
+    background-color: #0a6c31;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Tabla de alumnos */
+.filter-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+}
+
+.search-box input {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px 0 0 5px;
+    width: 250px;
+}
+
+.search-box button {
+    background-color: #0a6c31;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.action-buttons button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th {
+    background-color: #0a6c31;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 500;
+}
+
+td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.active {
+    background-color: #d4edda;
+    color: #0a6c31;
+}
+
+.pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.inactive {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.actions {
+    display: flex;
+    gap: 5px;
+}
+
+.action-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+}
+
+.view {
+    background-color: #e2f0e9;
+    color: #0a6c31;
+}
+
+.edit {
+    background-color: #e8f4f8;
+    color: #0d6efd;
+}
+
+.delete {
+    background-color: #fde8e8;
+    color: #dc3545;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 25px;
+    border-radius: 5px;
+    width: 500px;
+    max-width: 90%;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+}
+
+.modal-title {
+    margin-top: 0;
+    color: #0a6c31;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 25px;
+}
+
+/* Badge de estado */
+.student-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.student-active {
+    background-color: #d4edda;
+    color: #0a6c31;
+}
+
+.student-inactive {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Paginación */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.pagination-btn {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.pagination-btn.active {
+    background-color: #0a6c31;
+    color: white;
+    border-color: #0a6c31;
+}
+
+.pagination-btn:hover:not(.active) {
+    background-color: #f5f5f5;
+}
+
+/* Dropdown de filtros */
+.filter-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.filter-btn {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.filter-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    z-index: 1;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 5px;
+}
+
+.filter-group {
+    margin-bottom: 10px;
+}
+
+.filter-heading {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.filter-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.show {
+    display: block;
+}
+
+/* Avatar de usuario */
+.student-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #495057;
+    font-weight: 500;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.student-info {
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo para imágenes de perfil */
+.upload-area {
+    border: 2px dashed #ddd;
+    padding: 25px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.upload-area:hover {
+    border-color: #0a6c31;
+}
+
+.upload-icon {
+    font-size: 40px;
+    color: #999;
+    margin-bottom: 15px;
+}
+
+.upload-text {
+    color: #666;
+}
+
+/* Estilo para tooltips */
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 12px;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
