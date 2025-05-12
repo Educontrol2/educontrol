@@ -131,6 +131,31 @@ header {
     color: var(--color-verde-oscuro);
 }
 
+.breadcrumb {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.breadcrumb li {
+    list-style: none;
+    font-size: 0.9rem;
+    color: var(--color-gris-medio);
+}
+
+.breadcrumb li a {
+    color: var(--color-verde-medio);
+    text-decoration: none;
+}
+
+.breadcrumb li a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb li:not(:last-child)::after {
+    content: '/';
+    margin: 0 0.5rem;
+}
 .module-content {
     background-color: var(--color-blanco);
     border-radius: 10px;
