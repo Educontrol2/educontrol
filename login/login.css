@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 5rem;
     background-color: #f5f5f5;
     display: flex;
     align-items: center;
@@ -21,8 +21,15 @@ body {
 .logo {
     text-align: center;
     margin-bottom: 30px;
-    padding-top: 5rem;
+    padding-top: 2rem;
 }
+
+.logo a {
+    text-decoration: none;
+}
+
+
+
 
 .logo span {
     font-size: 32px;
@@ -36,6 +43,11 @@ body {
 .logo span:last-child {
     color: #ffc107;
 }
+
+.logo span:hover{
+    text-decoration: underline;
+}
+
 
 .login-title {
     text-align: center;
@@ -197,7 +209,11 @@ body {
 .social-btn img {
     width: 20px;
     height: 20px;
-    margin-right: 10px;
+    margin-right: 1rem;
+}
+
+svg {
+    margin-right: 1rem;
 }
 
 .help-text {

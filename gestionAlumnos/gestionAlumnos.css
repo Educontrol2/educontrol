@@ -117,17 +117,36 @@ header {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     text-align: center;
 }
-
-
-.breadcrumb {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #666;
+.page-title h1 {
+    font-size: 2.5rem;
+    color: var(--color-verde-oscuro);
+    margin-bottom: 0.5rem;
 }
 
-.breadcrumb a {
-    color: #0a6c31;
-    text-decoration: none;
+.breadcrumb {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.breadcrumb li {
+    list-style: none;
+    font-size: 0.9rem;
+    color: var(--color-gris-medio);
+}
+
+.breadcrumb li a {
+    color: var(--color-verde-medio);
+    text-decoration: underline;
+}
+
+.breadcrumb li a:hover{
+    text-decoration: underline;
+}
+
+.breadcrumb li:not(:last-child)::after{
+    content: '/';
+    margin: 0 0.5rem;
 }
 
 .content {
@@ -142,7 +161,7 @@ header {
 
 .tabs {
     display: flex;
-    border-bottom: 2px solid #eee;
+    border-bottom: 2px solid var(--color-blanco);
     margin-bottom: 30px;
 }
 
@@ -252,10 +271,11 @@ header {
 }
 
 .action-buttons button {
+    margin: auto;
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
-    margin-left: 10px;
+    margin-left: 1rem;
     cursor: pointer;
 }
 
