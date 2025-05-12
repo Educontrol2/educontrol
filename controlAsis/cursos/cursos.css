@@ -14,15 +14,135 @@ body {
     color: var(--color-gris-oscuro);
 }
 
+header {
+    background: linear-gradient(135deg, var(--color-verde-oscuro) 0%, var(--color-verde-medio) 100%);
+    color: var(--color-blanco);
+    padding: 1rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
 .container {
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
 }
 
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--color-blanco);
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--color-amarillo);
+    margin-left: 5px;
+}
+
+.logo svg {
+    margin-right: 10px;
+    fill: var(--color-amarillo);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+}
+
+.nav-menu li {
+    margin-left: 2rem;
+}
+
+.nav-menu a {
+    color: var(--color-blanco);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.nav-menu a:hover {
+    color: var(--color-amarillo);
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--color-amarillo);
+    transition: width 0.3s;
+}
+
+.nav-menu a:hover::after {
+    width: 100%;
+}
+
+.nav-menu a.active {
+    color: var(--color-amarillo);
+}
+
+.nav-menu a.active::after {
+    width: 100%;
+    background-color: var(--color-amarillo);
+}
+
+
+
 .page-title {
     text-align: center;
     margin: 2rem 0;
+    background-color: var(--color-blanco);
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.page-title h1 {
+    font-size: 2.5rem;
+    color: var(--color-verde-oscuro);
+}
+
+.breadcrumb {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.breadcrumb li {
+    list-style: none;
+    font-size: 0.9rem;
+    color: var(--color-gris-medio);
+}
+
+.breadcrumb li a {
+    color: var(--color-verde-medio);
+    text-decoration: none;
+}
+
+.breadcrumb li a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb li:not(:last-child)::after {
+    content: '/';
+    margin: 0 0.5rem;
 }
 
 table {
